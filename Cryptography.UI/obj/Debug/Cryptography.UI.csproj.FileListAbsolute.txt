@@ -1,0 +1,7 @@
+D:\MVS 2015 projects\Cryptography.Labs\Cryptography.UI\bin\Debug\Cryptography.UI.dll
+D:\MVS 2015 projects\Cryptography.Labs\Cryptography.UI\bin\Debug\Cryptography.UI.pdb
+D:\MVS 2015 projects\Cryptography.Labs\Cryptography.UI\bin\Debug\Infostructure.dll
+D:\MVS 2015 projects\Cryptography.Labs\Cryptography.UI\bin\Debug\Infostructure.pdb
+D:\MVS 2015 projects\Cryptography.Labs\Cryptography.UI\obj\Debug\Cryptography.UI.csprojResolveAssemblyReference.cache
+D:\MVS 2015 projects\Cryptography.Labs\Cryptography.UI\obj\Debug\Cryptography.UI.dll
+D:\MVS 2015 projects\Cryptography.Labs\Cryptography.UI\obj\Debug\Cryptography.UI.pdb
