@@ -20,6 +20,8 @@ namespace Cryptography.Algorithm
 
         public override string Encrypt(string strToEncryption)
         {
+            base.Encrypt(strToEncryption);
+
             int i = 0;
             return new string(strToEncryption.Select(chr =>
                 {
@@ -38,6 +40,8 @@ namespace Cryptography.Algorithm
 
         public override string Decrypt(string strToDecryption)
         {
+            base.Decrypt(strToDecryption);
+
             int i = 0;
             return new string(strToDecryption.Select(chr =>
                 {

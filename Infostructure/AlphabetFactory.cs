@@ -18,33 +18,41 @@ namespace Cryptography.Infostructure
     {
         public static string TakeAlphabet(AlphabetType alphabetType)
         {
-            string alphabet = default(string);
-
             var path = $"{Environment.CurrentDirectory}\\" + (alphabetType == AlphabetType.Roman ? "romania.txt" : "cyrillic.txt");
 
             // First initialization
             if (!File.Exists(path))
             {
+                string content = default(string);
                 switch (alphabetType)
                 {
                     case AlphabetType.Roman:
-                        alphabet = "abcdefghijklmnopqrstuvwxyz";
+                        content = "abcdefghijklmnopqrstuvwxyz";
                         break;
                     case AlphabetType.Cyrillic:
-                        alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+                        content = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
                         break;
                     default:
                         break;
                 }
 
                 using (var sw = new StreamWriter(File.Create(path)))
-                    sw.Write(alphabet);
+                    sw.Write(content);
             }
 
+            return TakeAlphabetFromFile(path);
+        }
+
+        public static string TakeAlphabetFromFile(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+                throw new ArgumentNullException("Invalid path to alphabet.");
+
+            string alphabet = default(string);
             using (var sr = new StreamReader(path))
                 alphabet = sr.ReadToEnd();
 
-            return alphabet;
+            return alphabet.ToLowerInvariant();
         }
     }
 }

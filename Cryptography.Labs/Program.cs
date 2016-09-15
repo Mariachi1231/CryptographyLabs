@@ -14,6 +14,8 @@ namespace Cryptography.Labs
     {
         static void Main(string[] args)
         {
+            string path = $"{Environment.CurrentDirectory}\\alphabetPoem.txt";
+
             string message = "ABCD ABRD,EE     F".ToLowerInvariant();
 
             string encryptedMessage = default(string);
@@ -25,15 +27,21 @@ namespace Cryptography.Labs
                 new CeasarAlgorithm(AlphabetFactory.TakeAlphabet(AlphabetType.Roman), 3));
             */
 
-            /* thrithemiusAlgorithm
+            /* thrithemius
             var service = new CrypthographyService(
                 new ConsoleMessageWriter(),
                 new TrithemiusAlgorithm(AlphabetFactory.TakeAlphabet(AlphabetType.Roman), x => x + 1));
             */
 
+            /* gamma
             var service = new CrypthographyService(
                 new ConsoleMessageWriter(),
                 new GammaAlgorithm(AlphabetFactory.TakeAlphabet(AlphabetType.Roman), "abcd"));
+            */
+
+            var service = new CrypthographyService(
+                new ConsoleMessageWriter(),
+                new ShtirlitzAlgorithm(AlphabetFactory.TakeAlphabetFromFile(path)));
 
             encryptedMessage = service.CryptoMaster.Encrypt(message);
             decryptedMessage = service.CryptoMaster.Decrypt(encryptedMessage);

@@ -45,7 +45,9 @@
     <Compile Include="FirstLab\CeasarAlgorithm.cs" />
     <Compile Include="FirstLab\GammaAlgorithm.cs" />
     <Compile Include="FirstLab\TrithemiusAlgorithm.cs" />
+    <Compile Include="LinqExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecondLab\ShtirlitzAlgorithm.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infostructure\Cryptography.Infostructure.csproj">
@@ -53,9 +55,7 @@
       <Name>Cryptography.Infostructure</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SecondLab\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
