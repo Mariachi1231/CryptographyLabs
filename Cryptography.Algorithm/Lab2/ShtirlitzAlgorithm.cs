@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Cryptography.Algorithm.Utils;
 
 namespace Cryptography.Algorithm
 {
@@ -13,7 +14,7 @@ namespace Cryptography.Algorithm
         public ShtirlitzAlgorithm(string alphabet)
             : base(alphabet)
         {
-            int size = ((int) Math.Sqrt(alphabet.Length)) + 1;
+            int size = ((int) System.Math.Sqrt(alphabet.Length)) + 1;
             alphabetArray = new char[size, size];
 
             FillAlphabetArray();

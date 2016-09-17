@@ -42,12 +42,15 @@
   <ItemGroup>
     <Compile Include="CryptoAlgorithm.cs" />
     <Compile Include="CryptoAlgorithmWithAlphabet.cs" />
-    <Compile Include="FirstLab\CeasarAlgorithm.cs" />
-    <Compile Include="FirstLab\GammaAlgorithm.cs" />
-    <Compile Include="FirstLab\TrithemiusAlgorithm.cs" />
-    <Compile Include="LinqExtensions.cs" />
+    <Compile Include="Lab1\CeasarAlgorithm.cs" />
+    <Compile Include="Lab1\GammaAlgorithm.cs" />
+    <Compile Include="Lab1\TrithemiusAlgorithm.cs" />
+    <Compile Include="Math\Polynomial.cs" />
+    <Compile Include="Math\PolynomialMember.cs" />
+    <Compile Include="Utils\LocalExtensions.cs" />
+    <Compile Include="Lab2\PolinomialAlgorithm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SecondLab\ShtirlitzAlgorithm.cs" />
+    <Compile Include="Lab2\ShtirlitzAlgorithm.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infostructure\Cryptography.Infostructure.csproj">

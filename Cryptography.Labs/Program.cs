@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Cryptography.Algorithm;
+using Cryptography.Algorithm.Math;
 using Cryptography.Infostructure;
 using Cryptography.UI;
 
@@ -16,32 +17,15 @@ namespace Cryptography.Labs
         {
             string path = $"{Environment.CurrentDirectory}\\alphabetPoem.txt";
 
-            string message = "ABCD ABRD,EE     F".ToLowerInvariant();
+            //string message = "ABCD ABRD,EE     F".ToLowerInvariant();
+            string message = "abc";
 
             string encryptedMessage = default(string);
             string decryptedMessage = default(string);
 
-            /* ceasar 
             var service = new CrypthographyService(
                 new ConsoleMessageWriter(),
-                new CeasarAlgorithm(AlphabetFactory.TakeAlphabet(AlphabetType.Roman), 3));
-            */
-
-            /* thrithemius
-            var service = new CrypthographyService(
-                new ConsoleMessageWriter(),
-                new TrithemiusAlgorithm(AlphabetFactory.TakeAlphabet(AlphabetType.Roman), x => x + 1));
-            */
-
-            /* gamma
-            var service = new CrypthographyService(
-                new ConsoleMessageWriter(),
-                new GammaAlgorithm(AlphabetFactory.TakeAlphabet(AlphabetType.Roman), "abcd"));
-            */
-
-            var service = new CrypthographyService(
-                new ConsoleMessageWriter(),
-                new ShtirlitzAlgorithm(AlphabetFactory.TakeAlphabetFromFile(path)));
+                new PolinomialAlgorithm(AlphabetFactory.TakeAlphabet(AlphabetType.Roman), new Polynomial(new double[] { 1, 0, 1, 1 })));
 
             encryptedMessage = service.CryptoMaster.Encrypt(message);
             decryptedMessage = service.CryptoMaster.Decrypt(encryptedMessage);

@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Cryptography.Algorithm
+namespace Cryptography.Algorithm.Utils
 {
-    internal static class LinqExtensions
+    internal static class LocalExtensions
     {
         internal static string[] IndexOfAll<T>(this T[,] array, T value)
+            where T : struct
         {
             List<string> items = new List<string>();
 

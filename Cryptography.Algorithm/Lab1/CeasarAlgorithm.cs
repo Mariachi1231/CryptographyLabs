@@ -51,7 +51,7 @@ namespace Cryptography.Algorithm
                 return character;
 
             int idx = alphabet.IndexOf(character) - (offset % alphabet.Count());
-            idx = idx < 0 ? alphabet.Count() - Math.Abs(idx) : idx;
+            idx = idx < 0 ? alphabet.Count() - System.Math.Abs(idx) : idx;
             return alphabet[idx];
         }
     }

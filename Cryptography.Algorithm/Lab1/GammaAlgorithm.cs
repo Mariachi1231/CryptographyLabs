@@ -55,7 +55,7 @@ namespace Cryptography.Algorithm
                         throw new ArgumentException($"Invalid gamma. Alphabet doesn't contain the character {gamma[i]} from gamma");
 
                     int offset = alphabet.IndexOf(chr) - alphabet.IndexOf(gamma[i++]);
-                    return offset < 0 ? alphabet[alphabet.Count() - Math.Abs(offset)] : alphabet[offset];
+                    return offset < 0 ? alphabet[alphabet.Count() - System.Math.Abs(offset)] : alphabet[offset];
                 }).ToArray());
         }
     }
