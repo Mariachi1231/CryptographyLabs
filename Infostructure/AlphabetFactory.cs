@@ -27,10 +27,10 @@ namespace Cryptography.Infostructure
                 switch (alphabetType)
                 {
                     case AlphabetType.Roman:
-                        content = "abcdefghijklmnopqrstuvwxyz";
+                        content = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
                         break;
                     case AlphabetType.Cyrillic:
-                        content = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+                        content = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
                         break;
                     default:
                         break;
