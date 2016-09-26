@@ -24,7 +24,7 @@ namespace Cryptography.Algorithm
         {
             base.Encrypt(strToEncryption);
 
-            return String.Join(" ", strToEncryption.Select(chr => alphabetArray.IndexOfAll(chr).RandomString()));
+            return String.Join(" ", strToEncryption.Select(chr => alphabetArray.IndexOfAll(chr).GetRandomString()));
         }
 
         public override string Decrypt(string strToDecryption)

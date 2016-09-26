@@ -34,11 +34,162 @@ namespace Cryptography.Algorithm.Utils
             return items.ToArray();
         }
 
-        internal static string RandomString(this string[] strings)
+        internal static string GetRandomString(this string[] strings)
         {
             Random rand = new Random();
             Thread.Sleep(15);
             return strings[rand.Next(strings.Count() - 1)];
+        }
+
+        internal static IEnumerable<byte> ToByteArray(this string str)
+        {
+            return str.Select(x => Convert.ToByte(x)).ToArray();
+        }
+
+        internal static string GetStringEquation(this IEnumerable<byte> byteArray)
+        {
+            return new string(byteArray.Select(x => (char)x).ToArray());
+        }
+
+        internal static IEnumerable<bool> ToBits(this byte bt)
+        {
+            int size = 8;
+            bool[] bits = new bool[size];
+
+            int temp = bt;
+            var previous = false;
+            for (int i = 0; i < size; i++)
+            {
+                if (temp == 0)
+                    if (previous == false)
+                        break;
+                    else
+                        bits[size - i - 1] = true;
+                else
+                {
+                    if (temp % 2 == 1)
+                        bits[size - i - 1] = true;
+                    temp = temp / 2;
+                }
+            }
+
+            return bits;
+        }
+
+        internal static IEnumerable<bool> ToBits(this IEnumerable<byte> bytes)
+        {
+            var bitSequences = bytes.Select(x => x.ToBits());
+
+            foreach (var bitSequence in bitSequences)
+                foreach (var bit in bitSequence)
+                    yield return bit;
+        }
+
+        internal static IEnumerable<byte> ToBytes(this IEnumerable<bool> bits)
+        {
+            var bitsSequences = bits.ToChunks(8);
+            foreach (var bitsSequence in bitsSequences)
+            {
+                byte result = 0;
+                var bitsArray = bitsSequence.ToArray();
+                for (int i = bitsArray.Length - 1; i > -1; i--)
+                    if (bitsArray[i])
+                        result += (byte) System.Math.Pow(2, bitsArray.Length - 1 - i);
+
+                yield return result;
+            }
+        }
+
+        internal static IEnumerable<IEnumerable<T>> ToChunks<T>(this IEnumerable<T> items, int chunkSize)
+        {
+            List<T> chunk = new List<T>(chunkSize);
+            foreach (var item in items)
+            {
+                chunk.Add(item);
+                if (chunk.Count == chunkSize)
+                {
+                    yield return chunk;
+                    chunk = new List<T>(chunkSize);
+                }
+            }
+
+            if (chunk.Any())
+                yield return chunk;
+        }
+
+        internal static void DivideIntoTwoParts<T>(this IEnumerable<T> sequence, out IEnumerable<T> leftPart, out IEnumerable<T> rightPart)
+        {
+            int halfSize = sequence.Count() / 2;
+
+            leftPart = sequence.Take(halfSize);
+            rightPart = sequence.Skip(halfSize);
+        }
+
+
+        internal static int ConvertFromBinaryToInt(this IEnumerable<bool> bits)
+        {
+            int result = 0;
+            bool[] bitsArray = bits.ToArray();
+            for (int i = bitsArray.Length - 1; i > -1; i--)
+                if (bitsArray[i])
+                    result += (int) System.Math.Pow(2, bitsArray.Length - 1 - i);
+
+            return result;
+        }
+
+        internal static IEnumerable<bool> ConvertFromIntToBinary(this int number)
+        {
+            List<bool> result = new List<bool>();
+
+            if (number == 0)
+                result.Add(false);
+
+            while (number != 0)
+            {
+                if (number % 2 == 0)
+                    result.Add(false);
+                else result.Add(true);
+
+                number /= 2;
+            }
+
+            result.Reverse();
+            return result;
+        }
+
+        internal static IEnumerable<bool> AddWhiteSpace(this IEnumerable<bool> bits, int blockSize)
+        {
+            if (bits.Count() != blockSize)
+            {
+                var bitsArray = new bool[blockSize];
+
+                int i = 0;
+                while (i < blockSize - bits.Count())
+                    bitsArray[i++] = false;
+
+                foreach (var item in bits)
+                    bitsArray[i++] = item;
+                
+                return bitsArray;
+            } else return bits;
+        }
+
+        internal static string StringInvariant(this IEnumerable<bool> bits)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            int i = 0;
+            foreach (var bit in bits)
+            {
+                if (i++ % 8 == 0 && i != 1)
+                    sb.Append(" ");
+
+                if (bit == false)
+                    sb.Append("0");
+                else sb.Append("1");
+            }
+
+            return sb.ToString();
         }
     }
 }

@@ -18,14 +18,14 @@ namespace Cryptography.Labs
             string path = $"{Environment.CurrentDirectory}\\alphabetPoem.txt";
 
             //string message = "ABCD ABRD,EE     F".ToLowerInvariant();
-            string message = "abc";
+            string message = "abcdefgh";
 
             string encryptedMessage = default(string);
             string decryptedMessage = default(string);
 
             var service = new CrypthographyService(
                 new ConsoleMessageWriter(),
-                new PolinomialAlgorithm(AlphabetFactory.TakeAlphabet(AlphabetType.Roman), new Polynomial(new double[] { 1, 0, 1, 1 })));
+                new DESAlgorithm("abcdefgh"));
 
             encryptedMessage = service.CryptoMaster.Encrypt(message);
             decryptedMessage = service.CryptoMaster.Decrypt(encryptedMessage);
