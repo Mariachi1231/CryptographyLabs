@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Cryptography.Algorithm.Utils;
+using Cryptography.Algorithm.Enums;
+using System.Diagnostics;
 
 
 // TODO REFACT
@@ -52,8 +54,10 @@ namespace Cryptography.Algorithm
                                                               30, 22, 14, 6 , 61, 53, 45, 37,
                                                               29, 21, 13, 5 , 28, 20, 12, 4  };
 
-        public static readonly int[] offsetTable = { 1, 1, 2, 2, 2, 2, 2, 2,
-                                                     1, 2, 2, 2, 2, 2, 2, 1 };
+        public static readonly int[][] offsetTables = {
+                                                        new int[] {  1,  1,  2,  2,  2,  2,  2,  2,  1,  2,  2,  2,  2,  2,  2,  1, },
+                                                        new int[] {  0, -1, -2, -2, -2, -2, -2, -2, -1, -2, -2, -2, -2, -2, -2, -1  }
+                                                   };
 
         public static readonly int[] pKeyCompressionBox = { 14, 17, 11, 24, 1,  5,  3, 28,
                                                             15, 6,  21, 10, 23, 19, 12, 4,
@@ -181,7 +185,24 @@ namespace Cryptography.Algorithm
         public override string Decrypt(string strToDecryption)
         {
             base.Decrypt(strToDecryption);
-            return String.Empty;
+
+            if (!Is64bitMult(strToDecryption))
+                throw new ArgumentException("Invalid string to decryption");
+
+            var bytes = strToDecryption.ToByteArray();
+            IEnumerable<IEnumerable<byte>> byteChuncks = bytes.ToChunks(blockSizeInBytes);
+
+            if (keyBits == null)
+            {
+                var keyBytes = key.ToByteArray();
+                keyBits = keyBytes.ToBits();
+            }
+
+            string result = String.Empty;
+            foreach (var chunk in byteChuncks)
+                result = String.Concat(result, DecryptByDESStep(chunk));
+
+            return result;
         }
 
         private string EncryptByDESStep(IEnumerable<byte> bytes)
@@ -203,7 +224,10 @@ namespace Cryptography.Algorithm
             {
                 var rightExtended = PermutationByTable(right, pExtensionBox);
 
-                keyBitsSequence = CreatePreRoundKey(keyBitsSequence, i);
+                keyBitsSequence = CreatePreRoundKey(keyBitsSequence, i, CryptoStrategy.Encryption);
+
+                Debug.WriteLine($"encryption round{i} key: {keyBitsSequence.StringInvariant()}");
+
                 var roundKey = PermutationByTable(keyBitsSequence, pKeyCompressionBox) as bool[];
 
                 var newRight = new List<bool>();
@@ -211,7 +235,6 @@ namespace Cryptography.Algorithm
                 foreach (var item in rightExtended)
                     newRight.Add(item ^ roundKey[j++]);
               
-
                 var vectors = newRight.ToChunks(6);
                 newRight = new List<bool>();
 
@@ -237,10 +260,76 @@ namespace Cryptography.Algorithm
                 foreach (var item in left)
                     newRight.Add(item ^ fArray[k++]);
 
+                    
                 left = right;
                 right = newRight;
 
                 if (i == roundsAmount - 1)
+                    afterRoundsSequence = left.Concat(right);
+            }
+
+            return PermutationByTable(afterRoundsSequence, inverseIpTable).ToBytes().GetStringEquation();
+        }
+
+        private string DecryptByDESStep(IEnumerable<byte> bytes)
+        {
+            if (bytes.Count() != blockSizeInBytes)
+                throw new ArgumentException($"Invalid size of bytes array. DES works only with {blockSizeInBytes}byte blocks");
+
+            var bits = bytes.ToBits();
+
+            bits = PermutationByTable(bits, ipTable);
+
+            IEnumerable<bool> left, right;
+            bits.DivideIntoTwoParts(out left, out right);
+
+            var keyBitsSequence = PermutationByTable(keyBits, removeCheckBitsTable);
+
+            IEnumerable<bool> afterRoundsSequence = null;
+            for (int i = roundsAmount - 1; i >= 0; i--)
+            {
+                var leftExtended = PermutationByTable(left, pExtensionBox);
+
+                keyBitsSequence = CreatePreRoundKey(keyBitsSequence, roundsAmount - 1 - i, CryptoStrategy.Decryption);
+
+                Debug.WriteLine($"decryption round{i} key: {keyBitsSequence.StringInvariant()}");
+
+                var roundKey = PermutationByTable(keyBitsSequence, pKeyCompressionBox) as bool[];
+
+                var newleft = new List<bool>();
+                int j = 0;
+                foreach (var item in leftExtended)
+                    newleft.Add(item ^ roundKey[j++]);
+
+                var vectors = newleft.ToChunks(6);
+                newleft = new List<bool>();
+
+                int k = 0;
+                foreach (var vector in vectors)
+                {
+                    var vectorArray = vector.ToArray();
+                    var row = new bool[] { vectorArray[0], vectorArray[5] };
+                    var column = new bool[] { vectorArray[1], vectorArray[2], vectorArray[3], vectorArray[4] };
+
+                    int newVector = sBoxes[k++][row.ConvertFromBinaryToInt(), column.ConvertFromBinaryToInt()];
+
+
+                    var vectorInBitFormat = newVector.ConvertFromIntToBinary().AddWhiteSpace(4);
+                    newleft.AddRange(vectorInBitFormat);
+                }
+
+                var f = PermutationByTable(newleft, pStraightForwardBox);
+                newleft = new List<bool>();
+
+                var fArray = f.ToArray();
+                k = 0;
+                foreach (var item in right)
+                    newleft.Add(item ^ fArray[k++]);
+
+                right = left;
+                left = newleft;
+
+                if (i == 0)
                     afterRoundsSequence = left.Concat(right);
             }
 
@@ -262,9 +351,9 @@ namespace Cryptography.Algorithm
             return sb.ToString();
         }
 
-        private IEnumerable<bool> CreatePreRoundKey(IEnumerable<bool> keyBitsSequence, int round)
+        private IEnumerable<bool> CreatePreRoundKey(IEnumerable<bool> keyBitsSequence, int round, CryptoStrategy cryptoStrategy)
         {
-            int roundOffset = offsetTable[round];
+            int roundOffset = offsetTables[(int) cryptoStrategy][round];
 
             IEnumerable<bool> C, D;
             keyBitsSequence.DivideIntoTwoParts(out C, out D);

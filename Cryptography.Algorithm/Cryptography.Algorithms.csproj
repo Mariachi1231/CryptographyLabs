@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="CryptoAlgorithm.cs" />
     <Compile Include="CryptoAlgorithmWithAlphabet.cs" />
+    <Compile Include="Enums\CryptoStrategy.cs" />
     <Compile Include="Lab3\DESAlgorithm.cs" />
     <Compile Include="Lab1\CeasarAlgorithm.cs" />
     <Compile Include="Lab1\GammaAlgorithm.cs" />
