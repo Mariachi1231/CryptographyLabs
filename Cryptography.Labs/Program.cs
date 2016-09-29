@@ -23,9 +23,13 @@ namespace Cryptography.Labs
             string encryptedMessage = default(string);
             string decryptedMessage = default(string);
 
+            //var service = new CrypthographyService(
+            //    new ConsoleMessageWriter(),
+            //    new DESAlgorithm("abcdefgh"));
+
             var service = new CrypthographyService(
                 new ConsoleMessageWriter(),
-                new DESAlgorithm("abcdefgh"));
+                new RSAAlgorithm(AlphabetFactory.TakeAlphabet(AlphabetType.Roman)));
 
             encryptedMessage = service.CryptoMaster.Encrypt(message);
             decryptedMessage = service.CryptoMaster.Decrypt(encryptedMessage);

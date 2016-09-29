@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,8 +48,11 @@
     <Compile Include="Lab1\CeasarAlgorithm.cs" />
     <Compile Include="Lab1\GammaAlgorithm.cs" />
     <Compile Include="Lab1\TrithemiusAlgorithm.cs" />
+    <Compile Include="Lab4\RSAAlgorithm.cs" />
+    <Compile Include="Math\EvklidAlgorithm.cs" />
     <Compile Include="Math\Polynomial.cs" />
     <Compile Include="Math\PolynomialMember.cs" />
+    <Compile Include="Math\PrimeNumberHelper.cs" />
     <Compile Include="Utils\LocalExtensions.cs" />
     <Compile Include="Lab2\PolinomialAlgorithm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
