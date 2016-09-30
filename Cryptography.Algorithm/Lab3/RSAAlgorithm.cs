@@ -87,18 +87,5 @@ namespace Cryptography.Algorithm
             publicKeys = new int[2] { publicExponent, mod };
             privateKeys = new int[2] { privateExponent, mod };
         }
-
-        private int div(int a, int p, int m)
-        {
-            var result = 1;
-            while (p != 0)
-            {
-                if ((p & 1) != 0)
-                    result = (result * a) % m;
-                p = (a * a) % m;
-                p >>= 1;
-            }
-            return result;
-        }
     }
 }

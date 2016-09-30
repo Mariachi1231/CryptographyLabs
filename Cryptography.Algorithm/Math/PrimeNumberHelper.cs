@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -59,6 +60,44 @@ namespace Cryptography.Algorithm.Math
                     mutualPrime.Add(i);
 
             return mutualPrime.ElementAt(rand.Next(mutualPrime.Count));
+        }
+
+        internal static int PrimitiveRootForPrimeNumber(int primeNumber)
+        {
+            List<int> fact = new List<int>();
+
+            int eulerFunc = EulerFuncForPrime(primeNumber);
+            int n = eulerFunc;
+
+            for (int i = 2; i * i < n; i++)
+            {
+                if (n % i == 0)
+                {
+                    fact.Add(i);
+                    while (n % i == 0)
+                        n /= i;
+                }
+            }
+
+            if (n > 1)
+                fact.Add(n);
+
+            var factArray = fact.ToArray();
+            for (int res = 2; res <= primeNumber; res++)
+            {
+                bool ok = true;
+                for (int i = 0; i < factArray.Length && ok; i++)
+                    ok &= BigInteger.ModPow(res, eulerFunc / factArray[i], primeNumber) != 1;
+                if (ok)
+                    return res;
+            }
+
+            return -1;
+        }
+
+        internal static int EulerFuncForPrime(int primeNumber)
+        {
+            return primeNumber - 1;
         }
     }
 }

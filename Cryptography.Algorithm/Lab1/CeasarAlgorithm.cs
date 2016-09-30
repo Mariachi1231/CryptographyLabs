@@ -18,7 +18,7 @@ namespace Cryptography.Algorithm
         public CeasarAlgorithm(string alphabet, int offset) 
             : base(alphabet)
         {
-            if (offset <= 0)
+            if (offset < 0)
                 throw new ArgumentException("Invalid offset");
 
             this.offset = offset;
@@ -53,6 +53,15 @@ namespace Cryptography.Algorithm
             int idx = alphabet.IndexOf(character) - (offset % alphabet.Count());
             idx = idx < 0 ? alphabet.Count() - System.Math.Abs(idx) : idx;
             return alphabet[idx];
+        }
+
+        public override void SetKey(string key)
+        {
+            int k;
+            if (!int.TryParse(key, out k))
+                throw new ArgumentException("Invalid key. Cannot cast to int.");
+
+            Offset = k;
         }
     }
 }

@@ -11,5 +11,7 @@ namespace Cryptography.Infostructure
         string Encrypt(string strToEncryption);
 
         string Decrypt(string strToDecryption);
+
+        void SetKey(string key);
     }
 }

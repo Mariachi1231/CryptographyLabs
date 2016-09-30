@@ -58,5 +58,10 @@ namespace Cryptography.Algorithm
                     return offset < 0 ? alphabet[alphabet.Count() - System.Math.Abs(offset)] : alphabet[offset];
                 }).ToArray());
         }
+
+        public override void SetKey(string key)
+        {
+            gamma = key;
+        }
     }
 }

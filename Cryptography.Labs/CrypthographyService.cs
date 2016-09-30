@@ -9,26 +9,18 @@ using Cryptography.UI;
 
 namespace Cryptography.Labs
 {
-    public class CrypthographyService
+    public class CrypthographyService : ServiceBase
     {
-        private readonly IMessageWriter messageWriter;
-
-        private readonly ICryptoAlgorithm cryptoMaster;
+        private ICryptoAlgorithm cryptoAlgorithm;
 
         public CrypthographyService(IMessageWriter messageWriter, ICryptoAlgorithm cryptoMaster)
+            : base(messageWriter)
         {
-            if (messageWriter == null)
-                throw new ArgumentNullException("messageWriter");
-
             if (cryptoMaster == null)
                 throw new ArgumentNullException("cryptoMaster");
-
-            this.messageWriter = messageWriter;
-            this.cryptoMaster = cryptoMaster;
+            this.cryptoAlgorithm = cryptoMaster;
         }
 
-        public IMessageWriter MessageWriter { get { return this.messageWriter; } }
-
-        public ICryptoAlgorithm CryptoMaster { get { return this.cryptoMaster; } }
+        public ICryptoAlgorithm CryptoMaster { get { return this.cryptoAlgorithm; } }
     }
 }

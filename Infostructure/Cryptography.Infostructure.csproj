@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="AlphabetFactory.cs" />
     <Compile Include="ICryptoAlgorithm.cs" />
+    <Compile Include="IKeyGenerator.cs" />
     <Compile Include="IMessageWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

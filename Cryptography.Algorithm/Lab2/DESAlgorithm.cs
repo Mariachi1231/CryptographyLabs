@@ -334,6 +334,11 @@ namespace Cryptography.Algorithm
             return PermutationByTable(afterRoundsSequence, inverseIpTable).ToBytes().GetStringEquation();
         }
 
+        public override void SetKey(string key)
+        {
+            Key = key;
+        }
+
         private bool Is64bitMult(string strToEncryption)
         {
             return strToEncryption.Length % blockSizeInBytes == 0;
