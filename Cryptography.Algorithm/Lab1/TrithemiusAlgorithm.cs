@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cryptography.Algorithm
 {
-    public class TrithemiusAlgorithm : CryptoAlgorithmWithAlphabet
+    public class TrithemiusAlgorithm : CryptoAlgorithmWithAlphabet 
     {
         private Func<int, int> offsetFunction;
         private CeasarAlgorithm cesarAlgorithm;
@@ -26,6 +23,7 @@ namespace Cryptography.Algorithm
             int i = 1;
             return new string(strToEncryption.Select(chr => cesarAlgorithm.Encrypt(chr, offsetFunction(i++))).ToArray());
         }
+
 
         public override string Decrypt(string strToDecryption)
         {

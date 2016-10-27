@@ -49,7 +49,7 @@
     <Compile Include="CrypthographyService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceBase.cs" />
+    <Compile Include="ProgramServiceBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Cryptography.Algorithm.Math;
 
 namespace Cryptography.Algorithm
@@ -76,7 +75,6 @@ namespace Cryptography.Algorithm
         private void GenerateKeys()
         {
             int p = PrimeNumberHelper.GenerateRandomPrime(randomPrimeNumberLowLimit, randomPrimeNumberHighLimit);
-
             int g = PrimeNumberHelper.PrimitiveRootForPrimeNumber(p);
 
             Random rand = new Random();

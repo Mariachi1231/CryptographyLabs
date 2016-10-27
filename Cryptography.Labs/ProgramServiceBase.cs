@@ -7,15 +7,15 @@ using Cryptography.Infostructure;
 
 namespace Cryptography.Labs
 {
-    public abstract class ServiceBase
+    public abstract class ProgramServiceBase
     {
         private IMessageWriter messageWriter;
 
-        private ServiceBase()
+        private ProgramServiceBase()
         {
         }
 
-        public ServiceBase(IMessageWriter messageWriter)
+        public ProgramServiceBase(IMessageWriter messageWriter)
         {
             MessageWriter = messageWriter;
         }

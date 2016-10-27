@@ -24,10 +24,5 @@ namespace Cryptography.Algorithm
 
             return strToEncryption;
         }
-
-        public virtual void SetKey(string key)
-        {
-            throw new InvalidOperationException("Setkey operation is not supported");
-        }
     }
 }

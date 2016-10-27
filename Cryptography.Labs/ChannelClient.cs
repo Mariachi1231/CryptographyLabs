@@ -26,7 +26,7 @@ namespace Cryptography.Labs
         public static readonly int randomNumberLowLimit  = 100000;
         public static readonly int randomNumberHighLimit = 1000000;
 
-        private ICryptoAlgorithm cryptoAlgorithm;
+        private ICryptoAlgorithmSettableKey cryptoAlgorithm;
 
         private string name;
         private string secretInfo;
@@ -42,14 +42,14 @@ namespace Cryptography.Labs
             Name = name;
         }
 
-        public ChannelClient(string name, ICryptoAlgorithm cryptoAlgorithm)
+        public ChannelClient(string name, ICryptoAlgorithmSettableKey cryptoAlgorithm)
             : this(name)
         {
             CryptoAlgorithm = cryptoAlgorithm;
             secretInfo = GenerateBigInteger(randomNumberLowLimit, randomNumberHighLimit).ToString();
         }
         
-        public ICryptoAlgorithm CryptoAlgorithm
+        public ICryptoAlgorithmSettableKey CryptoAlgorithm
         {
             get { return this.cryptoAlgorithm; }
             set

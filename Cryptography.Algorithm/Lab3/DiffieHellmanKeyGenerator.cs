@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Cryptography.Infostructure;
+﻿using System.Numerics;
 using Cryptography.Algorithm.Math;
-using System.Threading;
-using System.Numerics;
+using Cryptography.Infostructure;
 
 namespace Cryptography.Algorithm
 {
     public class DiffieHellmanKeyGenerator : IKeyGenerator
     {
-        public static readonly int randomPrimeNumberLowLimit  = 10000;
-        public static readonly int randomPrimeNumberHighLimit = 100000;
+        public static readonly int RandomPrimeNumberLowLimit  = 10000;
+        public static readonly int RandomPrimeNumberHighLimit = 100000;
 
         private int g, n;
 
         public DiffieHellmanKeyGenerator()
         {
-            g = PrimeNumberHelper.GenerateRandomPrime(randomPrimeNumberLowLimit, randomPrimeNumberHighLimit);
-            n = PrimeNumberHelper.GenerateRandomPrime(randomPrimeNumberLowLimit, randomPrimeNumberHighLimit);
+            g = PrimeNumberHelper.GenerateRandomPrime(RandomPrimeNumberLowLimit, RandomPrimeNumberHighLimit);
+            n = PrimeNumberHelper.GenerateRandomPrime(RandomPrimeNumberLowLimit, RandomPrimeNumberHighLimit);
         }
 
         public string GenerateAdditionalInformation(string secret)

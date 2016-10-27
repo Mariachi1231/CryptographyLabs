@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cryptography.Algorithm
 {
-    public class GammaAlgorithm : CryptoAlgorithmWithAlphabet
+    public class GammaAlgorithm : CryptoAlgorithmWithAlphabetSettableKey
     {
         private string gamma;
         public GammaAlgorithm(string alphabet, string gamma)
@@ -38,6 +35,14 @@ namespace Cryptography.Algorithm
                 }).ToArray());
         }
 
+        public override void SetKey(string key)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+                throw  new ArgumentNullException("key");
+
+            gamma = key;
+        }
+
         public override string Decrypt(string strToDecryption)
         {
             base.Decrypt(strToDecryption);
@@ -57,11 +62,6 @@ namespace Cryptography.Algorithm
                     int offset = alphabet.IndexOf(chr) - alphabet.IndexOf(gamma[i++]);
                     return offset < 0 ? alphabet[alphabet.Count() - System.Math.Abs(offset)] : alphabet[offset];
                 }).ToArray());
-        }
-
-        public override void SetKey(string key)
-        {
-            gamma = key;
         }
     }
 }

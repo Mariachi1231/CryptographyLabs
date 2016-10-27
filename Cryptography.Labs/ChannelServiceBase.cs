@@ -7,7 +7,7 @@ using Cryptography.Infostructure;
 
 namespace Cryptography.Labs
 {
-    public abstract class ChannelServiceBase : ServiceBase, IDisposable
+    public abstract class ChannelServiceBase : ProgramServiceBase, IDisposable
     {
         protected List<ChannelClient> channelClients = new List<ChannelClient>();
 

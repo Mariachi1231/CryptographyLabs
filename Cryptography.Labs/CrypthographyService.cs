@@ -9,7 +9,7 @@ using Cryptography.UI;
 
 namespace Cryptography.Labs
 {
-    public class CrypthographyService : ServiceBase
+    public class CrypthographyService : ProgramServiceBase
     {
         private ICryptoAlgorithm cryptoAlgorithm;
 

@@ -57,24 +57,23 @@ namespace Cryptography.Algorithm.Utils
             bool[] bits = new bool[size];
 
             int temp = bt;
-            var previous = false;
             for (int i = 0; i < size; i++)
             {
                 if (temp == 0)
-                    if (previous == false)
-                        break;
-                    else
-                        bits[size - i - 1] = true;
-                else
-                {
-                    if (temp % 2 == 1)
-                        bits[size - i - 1] = true;
-                    temp = temp / 2;
-                }
+                    break;
+                
+                if (temp % 2 == 1)
+                    bits[size - i - 1] = true;
+                temp = temp / 2;
             }
 
             return bits;
         }
+
+        internal static IEnumerable<bool> ConvertFromUIntToBinary(this uint source)
+        {
+            return ((int) source).ConvertFromIntToBinary();
+        } 
 
         internal static IEnumerable<bool> ToBits(this IEnumerable<byte> bytes)
         {
@@ -130,11 +129,31 @@ namespace Cryptography.Algorithm.Utils
         {
             int result = 0;
             bool[] bitsArray = bits.ToArray();
+
+            if (bitsArray.Length > 32)
+                throw new InvalidOperationException("int is to small for this sequence.");
+
             for (int i = bitsArray.Length - 1; i > -1; i--)
                 if (bitsArray[i])
                     result += (int) System.Math.Pow(2, bitsArray.Length - 1 - i);
 
             return result;
+        }
+
+        internal static uint ConvertFromBinaryToUInt(this IEnumerable<bool> bitSequence)
+        {
+            uint result = 0;
+            bool[] bitsArray = bitSequence.ToArray();
+
+            if (bitsArray.Length > 32)
+                throw new InvalidOperationException("int is to small for this sequence.");
+
+            for (int i = bitsArray.Length - 1; i > -1; i--)
+                if (bitsArray[i])
+                    result += (uint) System.Math.Pow(2, bitsArray.Length - 1 - i);
+
+            return result;
+
         }
 
         internal static IEnumerable<bool> ConvertFromIntToBinary(this int number)
@@ -157,21 +176,44 @@ namespace Cryptography.Algorithm.Utils
             return result;
         }
 
-        internal static IEnumerable<bool> AddWhiteSpace(this IEnumerable<bool> bits, int blockSize)
+        internal static IEnumerable<bool>AddWhiteSpaceBits(this IEnumerable<bool> bits, int blockSize)
         {
-            if (bits.Count() != blockSize)
-            {
-                var bitsArray = new bool[blockSize];
+            var bitsArray = bits as bool[] ?? bits.ToArray();
+            var sourceSize = bitsArray.Count();
 
-                int i = 0;
-                while (i < blockSize - bits.Count())
-                    bitsArray[i++] = false;
+            if (sourceSize > blockSize)
+                throw new InvalidOperationException("sourceSize must be less than blockSize.");
 
-                foreach (var item in bits)
-                    bitsArray[i++] = item;
-                
+            if (sourceSize == blockSize)
                 return bitsArray;
-            } else return bits;
+
+            var bitsBlock = new bool[blockSize];
+
+            int i = 0;
+            while (i < blockSize - bitsArray.Count())
+                bitsBlock[i++] = false;
+
+            foreach (var item in bitsArray)
+                bitsBlock[i++] = item;
+
+            return bitsBlock;
+        }
+
+        internal static bool[] BitwiseRotation(this IEnumerable<bool> bits, int offset)
+        {
+            var bitsArray = bits as bool[] ?? bits.ToArray();
+            bool[] result = new bool[bitsArray.Length];
+            for (int i = 0; i < bitsArray.Length; i++)
+            {
+                if (i + offset + 1 > bitsArray.Length)
+                    result[i] = bitsArray[i + offset - bitsArray.Length];
+                else if (i + offset < 0)
+                    result[i] = bitsArray[bitsArray.Length + i + offset];
+                else
+                    result[i] = bitsArray[i + offset];
+            }
+
+            return result;
         }
 
         internal static string StringInvariant(this IEnumerable<bool> bits)

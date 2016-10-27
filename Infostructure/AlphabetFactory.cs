@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace Cryptography.Infostructure
@@ -27,10 +23,10 @@ namespace Cryptography.Infostructure
                 switch (alphabetType)
                 {
                     case AlphabetType.Roman:
-                        content = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+                        content = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ,.?";
                         break;
                     case AlphabetType.Cyrillic:
-                        content = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ1234567890";
+                        content = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ1234567890 ,.?";
                         break;
                     default:
                         break;
@@ -52,7 +48,7 @@ namespace Cryptography.Infostructure
             using (var sr = new StreamReader(path))
                 alphabet = sr.ReadToEnd();
 
-            return alphabet.ToLowerInvariant();
+            return alphabet;
         }
     }
 }

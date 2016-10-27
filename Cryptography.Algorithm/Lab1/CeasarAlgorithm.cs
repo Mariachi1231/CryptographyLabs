@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cryptography.Algorithm
 {
-    public class CeasarAlgorithm : CryptoAlgorithmWithAlphabet
+    public class CeasarAlgorithm : CryptoAlgorithmWithAlphabetSettableKey
     {
         private int offset;
 
@@ -33,6 +30,12 @@ namespace Cryptography.Algorithm
             return new string(strToEncryption.Select(chr => this.Encrypt(chr, this.offset)).ToArray());
         }
 
+        public override void SetKey(string key)
+        {
+            if (!int.TryParse(key, out offset))
+                throw  new ArgumentOutOfRangeException("Invalid format of key.");
+        }
+
         internal char Encrypt(char character, int offset)
         {
             return alphabet.Contains(character) ? alphabet[(alphabet.IndexOf(character) + offset) % alphabet.Count()] : character;
@@ -53,15 +56,6 @@ namespace Cryptography.Algorithm
             int idx = alphabet.IndexOf(character) - (offset % alphabet.Count());
             idx = idx < 0 ? alphabet.Count() - System.Math.Abs(idx) : idx;
             return alphabet[idx];
-        }
-
-        public override void SetKey(string key)
-        {
-            int k;
-            if (!int.TryParse(key, out k))
-                throw new ArgumentException("Invalid key. Cannot cast to int.");
-
-            Offset = k;
         }
     }
 }

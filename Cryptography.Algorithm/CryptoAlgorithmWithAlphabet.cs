@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Cryptography.Algorithm
 {
     // TODO     Remove hard coupling.
-    public class CryptoAlgorithmWithAlphabet : CryptoAlgorithm
+    public abstract  class CryptoAlgorithmWithAlphabet : CryptoAlgorithm
     {
         protected readonly string alphabet;
 
