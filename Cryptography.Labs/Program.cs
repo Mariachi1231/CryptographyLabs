@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using Cryptography.Algorithm;
 using Cryptography.Algorithm.Math;
 using Cryptography.Infostructure;
@@ -13,7 +14,7 @@ namespace Cryptography.Labs
             string path = $"{Environment.CurrentDirectory}\\alphabetPoem.txt";
 
             //string message = "ABCD ABRD,EE     F".ToLowerInvariant();
-            string message = "md5";
+            string message = "sha";
 
             string encryptedMessage = default(string);
             string decryptedMessage = default(string);
@@ -61,11 +62,23 @@ namespace Cryptography.Labs
 
             #region MD5 algorithm.
 
-            var service = new CrypthographyService(
-                new ConsoleMessageWriter(),
-                new MD5Algorithm());
+            //var service = new CrypthographyService(
+            //    new ConsoleMessageWriter(),
+            //    new MD5Algorithm());
 
             #endregion
+
+            #region Blowfish algorithm.
+
+            //var service = new CrypthographyService(
+            //    new ConsoleMessageWriter(), 
+            //    new BlowFishAlgorithm("FDSDFS"));
+
+            #endregion
+
+            var service = new CrypthographyService(
+                new ConsoleMessageWriter(), 
+                new SHA1Algorithm());
 
             encryptedMessage = service.CryptoMaster.Encrypt(message);
             decryptedMessage = service.CryptoMaster.Decrypt(encryptedMessage);

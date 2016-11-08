@@ -72,7 +72,7 @@ namespace Cryptography.Algorithm.Utils
 
         internal static IEnumerable<bool> ConvertFromUIntToBinary(this uint source)
         {
-            return ((int) source).ConvertFromIntToBinary();
+            return ((int) source).ConvertFromIntToBinary().AddWhiteSpaceBits(32);
         } 
 
         internal static IEnumerable<bool> ToBits(this IEnumerable<byte> bytes)
@@ -233,5 +233,26 @@ namespace Cryptography.Algorithm.Utils
 
             return sb.ToString();
         }
+
+        internal static bool[] Xor(this IEnumerable<bool> left, IEnumerable<bool> right)
+        {
+            if (left.Count() != right.Count())
+                throw new ArgumentException("Invalid length of sequences, left length != right length.");
+
+            var leftArray = left.ToArray();
+            var rightArray = right.ToArray();
+            for (int i = 0; i < leftArray.Length; i++)
+                leftArray[i] ^= rightArray[i];
+
+            return leftArray;
+        }
+
+        internal static T[] Fill<T>(this T[] source, T value)
+        {
+            for (int i = 0; i < source.Length; i++)
+                source[i] = value;
+
+            return source;
+        } 
     }
 }

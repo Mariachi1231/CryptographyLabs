@@ -10,8 +10,8 @@ namespace Cryptography.Algorithm
 {
     public class ElgamalAlgorithm : CryptoAlgorithmWithAlphabet
     {
-        public static readonly int randomPrimeNumberLowLimit = 10;
-        public static readonly int randomPrimeNumberHighLimit = 500;
+        public static readonly int RandomPrimeNumberLowLimit = 10;
+        public static readonly int RandomPrimeNumberHighLimit = 500;
 
         private BigInteger[] publicKey;
         private BigInteger privateKey;
@@ -74,7 +74,7 @@ namespace Cryptography.Algorithm
 
         private void GenerateKeys()
         {
-            int p = PrimeNumberHelper.GenerateRandomPrime(randomPrimeNumberLowLimit, randomPrimeNumberHighLimit);
+            int p = PrimeNumberHelper.GenerateRandomPrime(RandomPrimeNumberLowLimit, RandomPrimeNumberHighLimit);
             int g = PrimeNumberHelper.PrimitiveRootForPrimeNumber(p);
 
             Random rand = new Random();
@@ -85,12 +85,12 @@ namespace Cryptography.Algorithm
             privateKey = x;
         }
 
-        private int GenerateBigInteger(int lowLimit, int HighLimit)
+        private int GenerateBigInteger(int lowLimit, int highLimit)
         {
             Random rand = new Random();
             Thread.Sleep(15);
 
-            return rand.Next(lowLimit, HighLimit);
+            return rand.Next(lowLimit, highLimit);
         }
     }
 }

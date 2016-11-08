@@ -139,8 +139,8 @@ namespace Cryptography.Algorithm
 
         public DESAlgorithm(string key)
         {
-            if (!Is64bitMult(key))
-                throw new ArgumentException("Invalid size of key. DES algorithm requires 64bit key.");
+            if (!AlgorithmUtils.IsCanDivideBy(key, blockSizeInBits))
+                throw new ArgumentOutOfRangeException("Invalid size of key. DES requires 64 bit key.");
 
             this.key = key;
             this.keyBits = null;
@@ -160,8 +160,8 @@ namespace Cryptography.Algorithm
         public override string Encrypt(string strToEncryption)
         {
             base.Encrypt(strToEncryption);
-            if (!Is64bitMult(strToEncryption))
-                strToEncryption = AddHiddenInformation(strToEncryption);
+            if (AlgorithmUtils.IsCanDivideBy(strToEncryption, blockSizeInBits))
+                strToEncryption = AlgorithmUtils.AddHiddenInformation(strToEncryption, blockSizeInBits);
 
             return SymetricAlgorithm(strToEncryption, CryptoStrategy.Encryption);
         }
@@ -169,7 +169,7 @@ namespace Cryptography.Algorithm
         public override string Decrypt(string strToDecryption)
         {
             base.Decrypt(strToDecryption);
-            if (!Is64bitMult(strToDecryption))
+            if (AlgorithmUtils.IsCanDivideBy(strToDecryption, blockSizeInBits))
                 throw new ArgumentException("Invalid string to decryption");
 
             return SymetricAlgorithm(strToDecryption, CryptoStrategy.Decryption);
@@ -321,21 +321,6 @@ namespace Cryptography.Algorithm
             }
 
             return PermutationByTable(newPart, PStraightForwardBox);
-        }
-
-        private bool Is64bitMult(string strToEncryption)
-        {
-            return strToEncryption.Length % blockSizeInBytes == 0;
-        }
-
-        private string AddHiddenInformation(string strToEncryption)
-        {
-            StringBuilder sb = new StringBuilder(strToEncryption);
-            int lack = blockSizeInBytes - (strToEncryption.Length % blockSizeInBytes);
-            for (int i = 0; i < lack; i++)
-                sb.Append(" ");
-
-            return sb.ToString();
         }
 
         private IEnumerable<bool> CreatePreRoundKey(IEnumerable<bool> keyBitsSequence, int round, CryptoStrategy cryptoStrategy)

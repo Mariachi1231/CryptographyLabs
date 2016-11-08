@@ -75,8 +75,6 @@ namespace Cryptography.Labs
 
         public string SecretInfo { get { return this.secretInfo; } }
         
-
-
         public string SendMessage(string message, bool encrypt)
         {
             if (encrypt)

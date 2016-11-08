@@ -39,9 +39,7 @@ namespace Cryptography.Algorithm
             bits = strToEncryption.ToByteArray().ToBits().ToList();
             int sourceLength = bits.Count;
 
-
             FlowAligment();
-
 
             AddMessageLength(sourceLength);
 
@@ -113,10 +111,10 @@ namespace Cryptography.Algorithm
                 c = RoundFunction(c, d, a, b, wordArray[3],  14, 27, FuncG);
                 b = RoundFunction(b, c, d, a, wordArray[8],  20, 28, FuncG);
 
-                a = RoundFunction(a, b, c, d, wordArray[13],   5, 29, FuncG);
-                d = RoundFunction(d, a, b, c, wordArray[2],  9, 30, FuncG);
+                a = RoundFunction(a, b, c, d, wordArray[13],  5, 29, FuncG);
+                d = RoundFunction(d, a, b, c, wordArray[2],   9, 30, FuncG);
                 c = RoundFunction(c, d, a, b, wordArray[7],  14, 31, FuncG);
-                b = RoundFunction(b, c, d, a, wordArray[12],  20, 32, FuncG);
+                b = RoundFunction(b, c, d, a, wordArray[12], 20, 32, FuncG);
 
 
                 // Third stage.
