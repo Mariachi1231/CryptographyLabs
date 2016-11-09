@@ -1,13 +1,19 @@
 ﻿using System.Linq;
 using System.Text;
+using Microsoft.SqlServer.Server;
 
 namespace Cryptography.Algorithm.Utils
 {
     public static class AlgorithmUtils
     {
-        internal static bool IsCanDivideBy(string source, int devisor)
+        internal static bool IsCanDivideByBits(string source, int devisorInBits)
         {
-            return source.ToByteArray().ToBits().Count() % devisor == 0;
+            return source.ToByteArray().ToBits().Count() % devisorInBits == 0;
+        }
+
+        internal static bool IsCanDivideByBytes(string source, int devisorInBytes)
+        {
+            return source.ToByteArray().Count() % devisorInBytes == 0;
         }
 
         internal static string AddHiddenInformation(string source, int blockSizeInBytes)

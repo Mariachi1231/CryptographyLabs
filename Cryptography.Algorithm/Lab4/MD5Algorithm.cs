@@ -34,8 +34,6 @@ namespace Cryptography.Algorithm
 
         public override string Encrypt(string strToEncryption)
         {
-            base.Encrypt(strToEncryption);
-
             bits = strToEncryption.ToByteArray().ToBits().ToList();
             int sourceLength = bits.Count;
 
@@ -171,7 +169,7 @@ namespace Cryptography.Algorithm
 
         public override string Decrypt(string strToDecryption)
         {
-            throw new InvalidOperationException("This algorithm doesn't support decryption.");
+            return String.Empty;
         }
 
         private void FlowAligment()

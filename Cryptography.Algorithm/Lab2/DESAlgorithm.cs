@@ -139,7 +139,7 @@ namespace Cryptography.Algorithm
 
         public DESAlgorithm(string key)
         {
-            if (!AlgorithmUtils.IsCanDivideBy(key, blockSizeInBits))
+            if (!AlgorithmUtils.IsCanDivideByBits(key, blockSizeInBits))
                 throw new ArgumentOutOfRangeException("Invalid size of key. DES requires 64 bit key.");
 
             this.key = key;
@@ -160,7 +160,7 @@ namespace Cryptography.Algorithm
         public override string Encrypt(string strToEncryption)
         {
             base.Encrypt(strToEncryption);
-            if (AlgorithmUtils.IsCanDivideBy(strToEncryption, blockSizeInBits))
+            if (AlgorithmUtils.IsCanDivideByBits(strToEncryption, blockSizeInBits))
                 strToEncryption = AlgorithmUtils.AddHiddenInformation(strToEncryption, blockSizeInBits);
 
             return SymetricAlgorithm(strToEncryption, CryptoStrategy.Encryption);
@@ -169,7 +169,7 @@ namespace Cryptography.Algorithm
         public override string Decrypt(string strToDecryption)
         {
             base.Decrypt(strToDecryption);
-            if (AlgorithmUtils.IsCanDivideBy(strToDecryption, blockSizeInBits))
+            if (AlgorithmUtils.IsCanDivideByBits(strToDecryption, blockSizeInBits))
                 throw new ArgumentException("Invalid string to decryption");
 
             return SymetricAlgorithm(strToDecryption, CryptoStrategy.Decryption);

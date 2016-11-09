@@ -24,7 +24,7 @@ namespace Cryptography.Algorithm
 
     public class BlowFishAlgorithm : CryptoAlgorithm, ICryptoAlgorithmSettableKey
     {
-        public static readonly int BlockSizeInBits = 64;
+        public static readonly int BlockSizeInBytes = 8;
 
         public static readonly uint[] StartP =
         {
@@ -227,14 +227,18 @@ namespace Cryptography.Algorithm
             this.SetKey(key);
         }
 
+        static BlowFishAlgorithm()
+        {
+            BlockSizeInBytes = 64;
+        }
+
         public override string Encrypt(string strToEncryption)
         {
             base.Encrypt(strToEncryption);
             str = strToEncryption;
-           if (!AlgorithmUtils.IsCanDivideBy(strToEncryption, BlockSizeInBits))
-                strToEncryption = AlgorithmUtils.AddHiddenInformation(strToEncryption, BlockSizeInBits);
+            if (!AlgorithmUtils.IsCanDivideByBits(strToEncryption, BlockSizeInBytes))
+                strToEncryption = AlgorithmUtils.AddHiddenInformation(strToEncryption, BlockSizeInBytes);
 
-           
             Key576Elongation();
 
             S = StartS;
@@ -259,9 +263,9 @@ namespace Cryptography.Algorithm
             Key576Elongation();
 
             S = StartS;
-            P = PBufferInitializationByKey();
+            //P = PBufferInitializationByKey();
 
-            EncryptKeys();
+           // EncryptKeys();
 
             StringBuilder sb = new StringBuilder();
 
@@ -279,7 +283,7 @@ namespace Cryptography.Algorithm
                 sb.Append(DecryptTextBlock(left32.Concat(right32).ToArray()));
             }
 
-            return sb.toString(this);
+            return sb.ToString();
         }
 
         public void SetKey(string key)
@@ -361,11 +365,11 @@ namespace Cryptography.Algorithm
         private uint[] PBufferInitializationByKey()
         {
             var newP = new uint[StartP.Length];
-            var key32parts = key.ToByteArray().ToBits().ToChunks(32)
+            var key32Parts = key.ToByteArray().ToBits().ToChunks(32)
                                 .Select(x => x.ConvertFromBinaryToUInt()).ToArray();
 
             for (int i = 0; i < 18; i++)
-                    newP[i] = key32parts[i] ^ StartP[i];
+                    newP[i] = key32Parts[i] ^ StartP[i];
 
             return newP;
         }
@@ -407,11 +411,11 @@ namespace Cryptography.Algorithm
 
                 for (int i = 15; i > -1; i--)
                 {
-                    var pBits = P[i].ConvertFromUIntToBinary();
-
-                    left = left.Xor(pBits);
                     right = right.Xor(FunctionF(left));
 
+                    var pBits = P[i].ConvertFromUIntToBinary();
+                    left = left.Xor(pBits);
+                 
                     AlgorithmUtils.Swap(ref left, ref right);
                 }
 

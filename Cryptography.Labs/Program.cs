@@ -14,7 +14,7 @@ namespace Cryptography.Labs
             string path = $"{Environment.CurrentDirectory}\\alphabetPoem.txt";
 
             //string message = "ABCD ABRD,EE     F".ToLowerInvariant();
-            string message = "sha";
+            string message = "md5";
 
             string encryptedMessage = default(string);
             string decryptedMessage = default(string);
@@ -70,15 +70,15 @@ namespace Cryptography.Labs
 
             #region Blowfish algorithm.
 
-            //var service = new CrypthographyService(
-            //    new ConsoleMessageWriter(), 
-            //    new BlowFishAlgorithm("FDSDFS"));
+            var service = new CrypthographyService(
+                new ConsoleMessageWriter(),
+                new BlowFishAlgorithm("FSDF"));
 
             #endregion
 
-            var service = new CrypthographyService(
-                new ConsoleMessageWriter(), 
-                new SHA1Algorithm());
+            //var service = new CrypthographyService(
+            //    new ConsoleMessageWriter(),
+            //    new SHA1Algorithm());
 
             encryptedMessage = service.CryptoMaster.Encrypt(message);
             decryptedMessage = service.CryptoMaster.Decrypt(encryptedMessage);

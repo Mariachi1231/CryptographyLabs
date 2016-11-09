@@ -70,10 +70,27 @@ namespace Cryptography.Algorithm.Utils
             return bits;
         }
 
-        internal static IEnumerable<bool> ConvertFromUIntToBinary(this uint source)
+        internal static IEnumerable<bool> ConvertFromUIntToBinary(this uint number)
         {
-            return ((int) source).ConvertFromIntToBinary().AddWhiteSpaceBits(32);
-        } 
+            List<bool> result = new List<bool>();
+
+            if (number == 0)
+                result.Add(false);
+
+            while (number != 0)
+            {
+                if (number % 2 == 0)
+                    result.Add(false);
+                else
+                    result.Add(true);
+
+                number /= 2;
+            }
+
+            result.Reverse();
+            return result.AddWhiteSpaceBits(32);
+            //return ((int) source).ConvertFromIntToBinary().AddWhiteSpaceBits(32);
+        }
 
         internal static IEnumerable<bool> ToBits(this IEnumerable<byte> bytes)
         {
