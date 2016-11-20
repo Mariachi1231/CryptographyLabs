@@ -13,8 +13,8 @@ namespace Cryptography.Algorithm
         public static readonly int RandomPrimeNumberLowLimit = 10;
         public static readonly int RandomPrimeNumberHighLimit = 500;
 
-        private BigInteger[] publicKey;
-        private BigInteger privateKey;
+        private System.Numerics.BigInteger[] publicKey;
+        private System.Numerics.BigInteger privateKey;
 
         public ElgamalAlgorithm(string alphabet)
             : base(alphabet)
@@ -40,8 +40,8 @@ namespace Cryptography.Algorithm
             {
                 int sessionKey = GenerateBigInteger(2, (int)publicKey[0] - 1);
 
-                int a = (int) BigInteger.ModPow(publicKey[1], sessionKey,publicKey[0]);
-                int b = (int) (BigInteger.Pow(publicKey[2], sessionKey) * letter % publicKey[0]);
+                int a = (int) System.Numerics.BigInteger.ModPow(publicKey[1], sessionKey,publicKey[0]);
+                int b = (int) (System.Numerics.BigInteger.Pow(publicKey[2], sessionKey) * letter % publicKey[0]);
                 sb.Append($"{a} {b}|");
             }
 
@@ -65,7 +65,7 @@ namespace Cryptography.Algorithm
 
             foreach (var cryptoGramm in cryptoGramms)
             {
-                var idx = (int) ((cryptoGramm[1] * BigInteger.Pow(cryptoGramm[0], (int) (publicKey[0] - 1 - privateKey))) % publicKey[0]);
+                var idx = (int) ((cryptoGramm[1] * System.Numerics.BigInteger.Pow(cryptoGramm[0], (int) (publicKey[0] - 1 - privateKey))) % publicKey[0]);
                 sb.Append(alphabet[idx - 1]);
             }
 
@@ -79,9 +79,9 @@ namespace Cryptography.Algorithm
 
             Random rand = new Random();
             int x = rand.Next(2, p);
-            BigInteger y = BigInteger.ModPow(g, x, p);
+            System.Numerics.BigInteger y = System.Numerics.BigInteger.ModPow(g, x, p);
 
-            publicKey = new BigInteger[] { p, g, y };
+            publicKey = new System.Numerics.BigInteger[] { p, g, y };
             privateKey = x;
         }
 

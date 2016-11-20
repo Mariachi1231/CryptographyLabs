@@ -87,7 +87,7 @@ namespace Cryptography.Algorithm.Math
             {
                 bool ok = true;
                 for (int i = 0; i < factArray.Length && ok; i++)
-                    ok &= BigInteger.ModPow(res, eulerFunc / factArray[i], primeNumber) != 1;
+                    ok &= System.Numerics.BigInteger.ModPow(res, eulerFunc / factArray[i], primeNumber) != 1;
                 if (ok)
                     return res;
             }

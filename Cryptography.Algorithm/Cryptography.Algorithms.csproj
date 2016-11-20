@@ -54,6 +54,10 @@
     <Compile Include="Lab3\RSAAlgorithm.cs" />
     <Compile Include="Lab4\BlowFishAlgorithm.cs" />
     <Compile Include="Lab4\SHA1Algorithm.cs" />
+    <Compile Include="Lab5\StribogHashAlgorithm.cs" />
+    <Compile Include="Math\BigInteger.cs" />
+    <Compile Include="Math\ECPoint.cs" />
+    <Compile Include="Lab5\ElipticCurvesAlgorithm.cs" />
     <Compile Include="Math\EvklidAlgorithm.cs" />
     <Compile Include="Math\LogicOperations.cs" />
     <Compile Include="Math\Polynomial.cs" />
@@ -72,9 +76,7 @@
       <Name>Cryptography.Infostructure</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Lab5\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

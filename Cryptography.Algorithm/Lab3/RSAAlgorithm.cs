@@ -34,7 +34,7 @@ namespace Cryptography.Algorithm
                     if (!alphabet.Contains(x))
                         throw new InvalidOperationException($"{x} isn't contains in alphabet:(");
 
-                    return BigInteger.ModPow(alphabet.IndexOf(x) + 1, publicKeys[0], publicKeys[1]);
+                    return System.Numerics.BigInteger.ModPow(alphabet.IndexOf(x) + 1, publicKeys[0], publicKeys[1]);
                 });
 
             foreach (var number in cypher)
@@ -57,7 +57,7 @@ namespace Cryptography.Algorithm
             foreach (var number in numbersInStrFormat)
             {
                 int cypher = int.Parse(number);
-                sb.Append(alphabet[(int)BigInteger.ModPow(cypher, privateKeys[0], privateKeys[1])-1]);
+                sb.Append(alphabet[(int)System.Numerics.BigInteger.ModPow(cypher, privateKeys[0], privateKeys[1])-1]);
             }
 
             privateKeys = null;

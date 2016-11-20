@@ -20,14 +20,14 @@ namespace Cryptography.Algorithm
         public string GenerateAdditionalInformation(string secret)
         {
             int secretNumber = int.Parse(secret);
-            return BigInteger.ModPow(g, secretNumber, n).ToString();
+            return System.Numerics.BigInteger.ModPow(g, secretNumber, n).ToString();
         }
 
         public string GenerateKey(string additionalInformation, string secret)
         {
             int additionalNumber = int.Parse(additionalInformation);
             int secretNumber = int.Parse(secret);
-            return BigInteger.ModPow(additionalNumber, secretNumber, n).ToString();
+            return System.Numerics.BigInteger.ModPow(additionalNumber, secretNumber, n).ToString();
         }
     }
 }
