@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text;
+using System.Threading;
 using Microsoft.SqlServer.Server;
 
 namespace Cryptography.Algorithm.Utils
@@ -24,6 +26,20 @@ namespace Cryptography.Algorithm.Utils
                 sb.Append(" ");
 
             return sb.ToString();
+        }
+
+        internal static bool[] GenerateRadomSequence(uint size)
+        {
+            Random rand = new Random();
+            bool[] array = new bool[size];
+
+            for (int i = 0; i < size; i++)
+            {
+                array[i] = rand.Next(0, 2) == 1;
+                Thread.Sleep(15);
+            }
+
+            return array;
         }
 
         internal static void Swap(ref bool[] left, ref bool[] right)

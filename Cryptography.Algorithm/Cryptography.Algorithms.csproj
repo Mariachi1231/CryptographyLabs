@@ -55,6 +55,9 @@
     <Compile Include="Lab4\BlowFishAlgorithm.cs" />
     <Compile Include="Lab4\SHA1Algorithm.cs" />
     <Compile Include="Lab5\StribogHashAlgorithm.cs" />
+    <Compile Include="Lab6\DSAAlgorithm.cs" />
+    <Compile Include="Lab7\AES.cs" />
+    <Compile Include="Lab7\AES128Algorithm.cs" />
     <Compile Include="Math\BigInteger.cs" />
     <Compile Include="Math\ECPoint.cs" />
     <Compile Include="Lab5\ElipticCurvesAlgorithm.cs" />

@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using Cryptography.Algorithm;
 using Cryptography.Algorithm.Lab5;
+using Cryptography.Algorithm.Lab7;
 using Cryptography.Algorithm.Math;
 using Cryptography.Infostructure;
 using Cryptography.UI;
@@ -15,7 +16,7 @@ namespace Cryptography.Labs
             string path = $"{Environment.CurrentDirectory}\\alphabetPoem.txt";
 
             //string message = "ABCD ABRD,EE     F".ToLowerInvariant();
-            string message = "sha";
+            string message = "fdskdasafdskdasa";
 
             string encryptedMessage = default(string);
             string decryptedMessage = default(string);
@@ -87,18 +88,21 @@ namespace Cryptography.Labs
 
             #region Cryptography system based on algorithm.
 
-            var service = new CrypthographyService(
-                new ConsoleMessageWriter(),
-                new ElipticCurvesAlgorithm());
+            //var service = new CrypthographyService(
+            //    new ConsoleMessageWriter(),
+            //    new ElipticCurvesAlgorithm());
 
             #endregion
 
             
+            var service = new CrypthographyService(
+                new ConsoleMessageWriter(),
+                new AES128Algorithm("key12345key12345"));
 
             encryptedMessage = service.CryptoMaster.Encrypt(message);
             decryptedMessage = service.CryptoMaster.Decrypt(encryptedMessage);
 
-            service.MessageWriter.WriteMessage($"Source message: {message}\nEncrypted message: {encryptedMessage}\nDecrypted message: {decryptedMessage}");
+            service.MessageWriter.WriteMessage($"Source message: {message}\n Encrypted message: {encryptedMessage}\nDecrypted message: {decryptedMessage}");
         }
     }
 }
